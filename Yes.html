@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Valentine Gift</title>
+  <link rel="stylesheet" href="Envel.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    #countdown {
+      font-size: 1.5rem;
+      margin: 20px 0;
+      color: #d9534f; /* romantic red */
+    }
+    #gift-img {
+      width: 300px;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="envlope-wrapper" style="text-align:center; margin-top:50px;">
+    <div class="letter-window" id="gift-window">
+      <!-- Countdown or gift will appear here -->
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Set Feb 14 of the current year
+      var unlockDate = new Date(new Date().getFullYear(), 1, 14, 0, 0, 0); // Month 1 = February
+
+      function updateCountdown() {
+        var now = new Date();
+        var diff = unlockDate - now;
+
+        if (diff <= 0) {
+          // Time's up → show gift
+          showGift();
+        } else {
+          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          var minutes = Math.floor((diff / (1000 * 60)) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          $("#gift-window").html(`
+            <h1>💌 Your Valentine gift is coming soon 💌</h1>
+            <div id="countdown">
+              ${days}d ${hours}h ${minutes}m ${seconds}s
+            </div>
+            <p>Come back here on February 14th to get your gift 😘</p>
+          `);
+        }
+      }
+
+      function showGift() {
+        $("#gift-window").html(`
+          <h1>🎁 Here’s your Valentine gift! 🎁</h1>
+          <img id="gift-img" src="https://static.zerochan.net/Ruki.%28Rokiru%29.1024.1436603.webp" 
+               alt="Anime girl giving chocolate" />
+        `);
+      }
+
+      // Update countdown every second
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
+  </script>
+</body>
+</html>
